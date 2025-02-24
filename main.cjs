@@ -33,6 +33,9 @@ app.use(express.static(assetsPath));
 app.get("/", (req, res) => {
   res.render("index", { title: "Mini Messageboard", messages: messages });
 });
+app.get("/new", (req, res) => {
+  res.render("form", { title: "Mini Messageboard", messages: messages });
+});
 
 app.use((err, req, res, next) => {
   console.error(err);
