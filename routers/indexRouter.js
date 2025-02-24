@@ -27,5 +27,17 @@ const messages = [
 indexRouter.get("/", (req, res) => {
   res.render("index", { title: "Mini Messageboard", messages: messages });
 });
+indexRouter.get("/message/:index", (req, res) => {
+  const message = messages[req.params.index];
 
-module.exports = indexRouter;
+  if (!message) {
+    return res.status(404).send("Message not found");
+  }
+
+  res.render("messageDetails", { message });
+});
+
+module.exports = {
+  indexRouter,
+  messages,
+};
