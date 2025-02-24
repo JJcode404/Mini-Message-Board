@@ -3,22 +3,36 @@ const express = require("express");
 const assetsPath = path.join(__dirname, "public");
 
 const app = express();
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 
 const messages = [
   {
     text: "Hi there!",
     user: "Amando",
-    added: new Date(),
+    profile: "./profiles/profile1.jpg",
+    added: new Date().toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    }),
   },
   {
     text: "Hello World!",
+    profile: "./profiles/profile2.jpg",
     user: "Charles",
-    added: new Date(),
+    added: new Date().toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    }),
   },
 ];
 
 app.use(express.static(assetsPath));
-res.render("index", { title: "Mini Messageboard", messages: messages });
+app.get("/", (req, res) => {
+  res.render("index", { title: "Mini Messageboard", messages: messages });
+});
 
 app.use((err, req, res, next) => {
   console.error(err);
@@ -27,9 +41,6 @@ app.use((err, req, res, next) => {
     .status(statusCode)
     .json({ error: err.message || "Internal Server Error" });
 });
-
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
 
 const PORT = 3000;
 app.listen(PORT, () => {
