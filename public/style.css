@@ -41,6 +41,7 @@
   width: 30%;
   border-right: 1px solid #ddd;
   overflow-y: auto;
+  background-color: #f9f9f9;
   padding: 10px;
 }
 
@@ -62,5 +63,4 @@
 
 .message-details {
   padding: 10px;
-  background: #f9f9f9;
 }

@@ -9,7 +9,7 @@ newMessageRouter.get("/", (req, res) => {
 newMessageRouter.post("/", (req, res) => {
   const userName = req.body.user;
   const userMessage = req.body.text;
-  messages.push({
+  messages.unshift({
     text: userMessage,
     user: userName,
     profile: "./profiles/default-image.jpg",
