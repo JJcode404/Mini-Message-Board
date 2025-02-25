@@ -12,7 +12,6 @@ app.set("view engine", "ejs");
 app.use(express.static(assetsPath));
 app.use("/", indexRouter);
 app.use("/new", newMessageRouter);
-
 app.use((err, req, res, next) => {
   console.error(err);
   const statusCode = err.statusCode || 500;
