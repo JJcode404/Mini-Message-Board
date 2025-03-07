@@ -23,7 +23,6 @@ async function main() {
     user: process.env.DATABASE_USER,
     database: process.env.DATABASE_NAME,
     password: process.env.DATABASE_PASSWORD,
-    port: process.env.port,
   });
   await client.connect();
   await client.query(SQL);
