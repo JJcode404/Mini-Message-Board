@@ -1,10 +1,10 @@
 const { Router } = require("express");
-const { getAllMessages } = require("../db/queries");
+const getAllMessages = require("../db/queries");
 
 const indexRouter = Router();
 // const messages = [
 //   {
-//     text: "Hi there!",
+//     text: "Hi there!",gi
 //     user: "Amando",
 //     profile: "./profiles/profile1.jpg",
 //     added: new Date().toLocaleTimeString("en-US", {
@@ -24,22 +24,40 @@ const indexRouter = Router();
 //     }),
 //   },
 // ];
-const messages = await getAllMessages();
+async function getAllmessages() {
+  const messages = await getAllMessages();
+  return messages;
+}
 
-indexRouter.get("/", (req, res) => {
-  res.render("index", { title: "Mini Messageboard", messages: messages });
-});
-indexRouter.get("/message/:index", (req, res) => {
-  const message = messages[req.params.index];
-
-  if (!message) {
-    return res.status(404).send("Message not found");
+indexRouter.get("/", async (req, res) => {
+  try {
+    const messages = await getAllmessages();
+    res.render("index", {
+      title: "Mini Messageboard",
+      messages,
+    });
+  } catch (error) {
+    console.error("Error fetching messages:", error);
+    res.status(500).send("Internal Server Error");
   }
+});
 
-  res.render("messageDetails", { message });
+indexRouter.get("/message/:index", async (req, res) => {
+  try {
+    const messages = await getAllmessages();
+    const message = messages[req.params.index];
+
+    if (!message) {
+      return res.status(404).send("Message not found");
+    }
+
+    res.render("messageDetails", { message });
+  } catch (error) {
+    console.error("Error fetching message:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 module.exports = {
   indexRouter,
-  messages,
 };

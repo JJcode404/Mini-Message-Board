@@ -1,5 +1,5 @@
-import pkg from "pg";
-import "dotenv/config";
+const pkg = require("pg");
+require("dotenv").config();
 const { Pool } = pkg;
 
 const pool = new Pool({
@@ -9,4 +9,4 @@ const pool = new Pool({
   password: process.env.DATABASE_PASSWORD,
 });
 
-export { pool };
+module.exports = pool;

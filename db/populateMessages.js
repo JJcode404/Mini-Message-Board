@@ -1,19 +1,22 @@
-import pkg from "pg";
-import "dotenv/config";
+const pkg = require("pg");
+require("dotenv").config();
 const { Client } = pkg;
 
 const SQL = `
-CREATE TABLE messages (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS messages (
+  id SERIAL PRIMARY KEY,
   text TEXT NOT NULL,
-  user VARCHAR(255) NOT NULL,
+  "user" VARCHAR(255) NOT NULL,
   profile VARCHAR(255),
   added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO messages (text, user, profile, added)  
-VALUES ("Good morning!", "Alice", "./profiles/profile1.jpg", NOW());
 
+INSERT INTO messages (text, "user", profile, added)  
+VALUES ('Good morning!', 'Alice', './profiles/profile1.jpg', NOW());
+
+INSERT INTO messages (text, "user", profile, added)  
+VALUES ('How was your day !', 'Stacy', './profiles/profile2.jpg', NOW());
 `;
 
 async function main() {
